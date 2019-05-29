@@ -5,6 +5,7 @@ import React from 'react';
 import { render , fireEvent, cleanup } from 'react-testing-library';
 import renderer from 'react-test-renderer';
 import Controls from './Controls';
+import 'jest-dom/extend-expect';
 
 //PREVENT MEMORY LEAKS ⬇︎
 afterEach ( cleanup );
@@ -12,22 +13,15 @@ afterEach ( cleanup );
 //CONTROL TESTING ⬇︎
 describe ( '<Controls/>' , () => {
 
-    //RENDERING ⬇︎
-    it ( 'Should render without crashing' , () => {
+    //RENDERING CONTROLS COMPONENT ⬇︎
+    it ( 'Should render Controls without crashing' , () => {
         render( <Controls/> )
     });
 
     //MATCH SNAPSHOT ⬇︎
-    it ( 'Should match the snapshot' , () => {
-        const snapshot = renderer.create( <Controls/> );
-        expect( snapshot.toJSON()).toMatchSnapshot();
-    });
-
-    //LOCATE BUTTONS ⬇︎
-    test ( 'Locate buttons' , () => {
-        const { queryByText } = render ( <Controls/> );
-        const closeButton = queryByText ( 'Close Gate' );
-        expect ( closeButton ) .toBeDefined ();
+    it ( 'Should match the Controls snapshot' , () => {
+        const snapshot = renderer .create ( <Controls/> );
+        expect( snapshot .toJSON ()) .toMatchSnapshot ();
     });
 
     //DISPLAY CLOSE GATE IF OPEN ⬇︎
@@ -76,6 +70,13 @@ describe ( '<Controls/>' , () => {
     });
 
     //ACTIONS ⬇︎
+
+    //LOCATE BUTTONS ⬇︎
+    test ( 'Locate buttons' , () => {
+        const { queryByText } = render ( <Controls/> );
+        const closeButton = queryByText ( 'Close Gate' );
+        expect ( closeButton ) .toBeDefined ();
+    });
 
     //CLOSE GATE BUTTON ⬇︎
     it ( 'Activates "Close Gate" button' , () => {
